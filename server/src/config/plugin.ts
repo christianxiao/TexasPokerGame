@@ -6,10 +6,10 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-cors',
   },
-  redis: {
-    enable: true,
-    package: 'egg-redis',
-  },
+  //redis: {
+  // enable: false,
+  //  package: 'egg-redis',
+  //},
   io: {
     enable: true,
     package: 'egg-socket.io',

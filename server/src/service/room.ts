@@ -10,8 +10,8 @@ export default class RoomService implements IRoomService {
   @plugin()
   mysql: any;
 
-  @plugin()
-  redis: any;
+  //@plugin()
+  //redis: any;
 
   async findById(uid: string): Promise<IRoom> {
     return await this.mysql.get('room', { id: uid });
@@ -27,8 +27,9 @@ export default class RoomService implements IRoomService {
   }
 
   async findByRoomNumber(number: string): Promise<boolean> {
-    const roomNumber = await this.redis.get(`room:${number}`);
-    return !!roomNumber;
+    // const roomNumber = await this.redis.get(`room:${number}`);
+    const result = await this.mysql.get('room', { roomNumber: number });
+    return !!result;
   }
 
   async add(isShort: boolean, smallBlind: number, expires: number = 360000) {
@@ -39,7 +40,8 @@ export default class RoomService implements IRoomService {
       isShort,
       smallBlind,
     });
-    const roomRedis = await this.redis.set(`room:${number}`, `${number}`, 'ex', expires);
+    // const roomRedis = await this.redis.set(`room:${number}`, `${number}`, 'ex', expires);
+    const roomRedis = 'OK'
     if (result.affectedRows === 1 && roomRedis === 'OK') {
       return { roomNumber: number };
     } else {

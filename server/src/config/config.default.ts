@@ -78,17 +78,17 @@ export default (appInfo: EggAppInfo) => {
         packetMiddleware: [],
       },
     },
-    redis: {
-      host: '127.0.0.1',
-      port: 6379,
-    },
+    //redis: {
+    //  host: '127.0.0.1',
+    //  port: 6379,
+    //},
   };
 
   config.redis = {
     client: {
       port: 6379,
       host: '127.0.0.1',
-      password: '123456',
+      password: '',
       db: 0,
     },
   };
@@ -101,7 +101,7 @@ export default (appInfo: EggAppInfo) => {
       // userName
       user: 'root',
       // password
-      password: '',
+      password: '12345678',
       // database name
       database: 'poker',
     },
