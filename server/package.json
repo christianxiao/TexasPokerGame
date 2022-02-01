@@ -1,7 +1,7 @@
 {
   "name": "poke-game-server",
   "version": "1.0.0",
-  "description": "node服务中心",
+  "description": "node",
   "private": true,
   "dependencies": {
     "@types/socket.io": "^2.1.4",

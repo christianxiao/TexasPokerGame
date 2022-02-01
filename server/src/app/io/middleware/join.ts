@@ -3,19 +3,44 @@ import { IGameRoom } from '../../../interface/IGameRoom';
 import { IPlayer } from '../../core/Player';
 
 export default function join(): any {
-  function updatePlayer(roomNumber: string, players: any, action: string, nsp: any) {
+  function joinAsync(socket:any, room:string) {
+    return new Promise((resolve, reject) => {
+      socket.join(room,function(){
+        resolve(true);
+      })
+    })
+  }
+  function updatePlayer(roomNumber: string, players: any, action: string, nsp: any, socket: any) {
     // 在线列表
-    nsp.adapter.clients([ roomNumber ], (err: any, clients: any) => {
-      // 更新在线用户列表
-      nsp.to(roomNumber).emit('online', {
-        clients,
-        action,
-        target: 'participator',
-        data: {
-          players,
-        },
-      });
+    console.log("updatePlayer00", roomNumber, players, action)
+
+    socket.emit('online', {
+      clients: [socket.id],
+      action,
+      target: 'participator',
+      data: {
+        players,
+      },
     });
+    nsp.adapter.clients([roomNumber], (err: any, clients: any) => {
+      // 更新在线用户列表
+      console.log("updatePlayer11", roomNumber, players, action, clients)
+      try {
+        nsp.to(roomNumber).emit('online', {
+          clients,
+          action,
+          target: 'participator',
+          data: {
+            players,
+          },
+        });
+      } catch (error) {
+        console.log("upppp", error, err)
+      };
+
+      console.log("updatePlayer22", roomNumber, players, action)
+    });
+    console.log("updatePlayer33", roomNumber, players, action)
   }
   return async (ctx: Context, next: () => Promise<any>) => {
     const socket = ctx.socket as any;
@@ -24,7 +49,7 @@ export default function join(): any {
     const nsp = app.io.of('/socket');
     const query = socket.handshake.query;
     const { room, token, roomConfig } = query;
-    console.log('socket-----join', id);
+    console.log('socket-----join', id, room);
     console.log('roomConfig-----roomConfig', JSON.parse(roomConfig));
     // room缓存信息是否存在
     if (!nsp.gameRooms) {
@@ -33,6 +58,9 @@ export default function join(): any {
     try {
       const hasRoom = nsp.gameRooms.find((r: IGameRoom) => r.number === room);
       const { user } = await app.jwt.verify(token);
+      const s = await joinAsync(socket, room);
+      console.log("joiniiii", s);
+
       socket.join(room);
       await socket.emit(id, ctx.helper.parseMsg('userInfo', { userInfo: user }));
       const player: IPlayer = {
@@ -58,10 +86,11 @@ export default function join(): any {
       };
       if (!hasRoom) {
         // not in the room
+        console.log('not in the room')
         nsp.gameRooms.push(gameRoom);
         gameRoom.roomInfo = {
           sit: [],
-          players: [ player ],
+          players: [player],
           game: null,
           sitLink: null,
           config: JSON.parse(roomConfig) || {
@@ -69,7 +98,7 @@ export default function join(): any {
             smallBlind: 1,
           },
         };
-        updatePlayer(room, gameRoom.roomInfo.players, 'players', nsp);
+        updatePlayer(room, gameRoom.roomInfo.players, 'players', nsp, socket);
       } else {
         // in the room
         gameRoom = nsp.gameRooms.find((r: IGameRoom) => r.number === room);
@@ -77,7 +106,7 @@ export default function join(): any {
         if (!findPlayer) {
           // game ready
           gameRoom.roomInfo.players.push(player);
-          updatePlayer(room, gameRoom.roomInfo.players, 'players', nsp);
+          updatePlayer(room, gameRoom.roomInfo.players, 'players', nsp, socket);
         } else {
           // gaming, update hand cards
           findPlayer.socketId = id;
@@ -128,7 +157,7 @@ export default function join(): any {
         socket.emit(id, msg);
       }
       // console.log('players', JSON.stringify(gameRoom.roomInfo.players));
-      updatePlayer(room, `User(${user.nickName}) joined.`, 'join', nsp);
+      // updatePlayer(room, `User(${user.nickName}) joined.`, 'join', nsp, socket);
       await next();
     } catch (e) {
       throw e;

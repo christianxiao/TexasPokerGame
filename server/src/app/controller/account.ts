@@ -17,7 +17,9 @@ export class Account extends BaseController {
       console.log(body, 'body');
       const { userAccount, password } = body;
       console.log(userAccount, 'userAccount');
-      const accountInfo: IAccountInfo = { userAccount, password };
+      let crypto = require('crypto');
+      let hash = crypto.createHash('md5').update(password).digest('hex');
+      const accountInfo: IAccountInfo = { userAccount, password: hash };
       const result = await this.service.login(accountInfo);
       this.success(result);
     } catch (e) {
@@ -32,7 +34,10 @@ export class Account extends BaseController {
       const { body } = this.getRequestBody();
       console.log(body);
       const { userAccount, password, nickName } = body;
-      const accountInfo: IAccountInfo = { userAccount, password, nickName };
+
+      let crypto = require('crypto');
+      let hash = crypto.createHash('md5').update(password).digest('hex');
+      const accountInfo: IAccountInfo = { userAccount, password: hash, nickName };
       const result = await this.service.register(accountInfo);
       this.success(result);
     } catch (e) {

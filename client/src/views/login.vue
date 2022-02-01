@@ -1,11 +1,12 @@
 <template>
     <div class="login-container container">
       <div class="login-body">
-        <div class="name">J-POKER</div>
+        <div class="name">A-POKER</div>
         <div class="user-name input-bd">
           <div class="input-name iconfont icon-account"></div>
           <div class="input-text">
-            <input type="text"
+          
+            <input type="text" placeholder="email.."
                    v-model="userAccount"/>
           </div>
         </div>

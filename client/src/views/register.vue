@@ -5,7 +5,7 @@
       <div class="title">Create Account</div>
       <div class="user-name">
         <XInput v-model='form.userAccount'
-                text="account"
+                text="Email"
                 @focus="removeValid('userAccount')"
                 :error="errorData.indexOf('userAccount') > -1"></XInput>
       </div>

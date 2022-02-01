@@ -9,7 +9,7 @@
       >
         <div class="default"
              v-show="!sit.player">
-          <i>sit</i>
+          <i>sit: {{sit.position}}</i>
         </div>
         <div class="sit-player"
              v-if="sit.player">
@@ -26,8 +26,8 @@
             <div class="counter"
                  :class="{isAction: actionUserId === sit.player.userId,
                   'close-time-out': time > 0 && time < 10 && actionUserId === sit.player.userId }"
-                 v-show="sit.player.counter >= 0 || sit.player.actionCommand === 'allin'">
-              {{ sit.player.counter || 0 }}
+                 v-show="sit.player && (sit.player.counter >= 0 || sit.player.actionCommand === 'allin')">
+              {{ sit.player && (sit.player.counter || 0) }}
             </div>
             <div class="action-size"
                  v-show="sit.player.actionSize > 0">
@@ -172,7 +172,8 @@
     }
 
     private sitDown(sit: ISit) {
-      if (!sit.player && (!this.isPlay || !this.hasSit)) {
+      console.log("sitttt", sit, this.currPlayer)
+      if (!sit.player && this.currPlayer && (!this.isPlay || !this.hasSit)) {
         if (this.currPlayer.counter <= 0) {
           this.showBuyIn = true;
           this.currSit = sit;
@@ -225,6 +226,7 @@
           sitNode = next as ILinkNode<ISit>;
         }
         console.log('sit', sitMap);
+        sitMap.sort((n1,n2) => n1.position - n2.position)
         return sitMap;
       }
       return [];
@@ -439,22 +441,22 @@
         }
 
         &:nth-child(6) {
-          left: 240 / 3.75vw;
+          left: 180 / 3.75vw;
           top: 0;
         }
 
         &:nth-child(7) {
-          left: 296 / 3.75vw;
+          left: 220 / 3.75vw;
           top: 100 / 6.67vh;
         }
 
         &:nth-child(8) {
-          left: 296 / 3.75vw;
+          left: 220 / 3.75vw;
           top: 210 / 6.67vh;
         }
 
         &:nth-child(9) {
-          left: 296 / 3.75vw;
+          left: 220 / 3.75vw;
           top: 330 / 6.67vh;
         }
 
