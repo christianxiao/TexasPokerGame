@@ -7,17 +7,29 @@ const http = require('http');
 const crypto = require('crypto');
 const exec = require('child_process').exec;
 
-const command = 'sudo /usr/bin/nodejs github/start2.sh'
+const command = '/usr/bin/nodejs github/start2.sh'
 
 console.log("github webhook start....");
 http.createServer(function (req, res) {
-    req.on('data', function(chunk) {
-        let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
-        console.log("github webhook....", req);
-        if (req.headers['x-hub-signature'] == sig) {
-            exec(command);
-        }
-    });
 
+    const buffers = [];
+    console.log("github webhook data....");
+    for await (const chunk of req) {
+      buffers.push(chunk);
+    }
+  
+    const data = Buffer.concat(buffers).toString();
+
+    let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
+    if (req.headers['x-hub-signature'] != sig) {
+        console.log("github webhook sig error....");
+        res.end();
+        return;
+    }
+    let bb = JSON.parse(data); // 'Buy the milk'
+    console.log("jsonssss", bb);
+    exec(command);
+  
+    
     res.end();
 }).listen(parseInt(port));
