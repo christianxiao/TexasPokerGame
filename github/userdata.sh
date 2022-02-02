@@ -18,7 +18,8 @@ su - ubuntu
 
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt update
-sudo apt-get install -y nodejs npm yarn
+sudo apt-get install -y nodejs npm
+sudo npm install --global yarn
 sudo apt-get install -y systemd
 
 echo 'export GITHUB_HOOK_ADDR="https://github.com/christianxiao/TexasPokerGame"' >> /home/ubuntu/.profile
