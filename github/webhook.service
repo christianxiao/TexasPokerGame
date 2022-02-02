@@ -6,7 +6,7 @@ After=network.target
 Environment=NODE_PORT=GITHUB_HOOK_PORT
 Type=simple
 User=GITHUB_HOOK_USER
-ExecStart=/usr/bin/nodejs /home/GITHUB_HOOK_USER/GITHUB_HOOK_PROJECT/github/webhook.js
+ExecStart=/bin/bash -l -c 'exec "$@"' _ /usr/bin/nodejs /home/GITHUB_HOOK_USER/GITHUB_HOOK_PROJECT/github/webhook.js
 Restart=on-failure
 
 [Install]

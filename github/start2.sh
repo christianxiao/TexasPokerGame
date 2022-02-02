@@ -1,3 +1,5 @@
+echo 'start2.sh start.....'
+source ~/.profile
 git checkout master
 git pull
 cd server

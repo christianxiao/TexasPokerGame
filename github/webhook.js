@@ -1,13 +1,14 @@
 //const secret = "your_secret_here";
 const secret = process.env.GITHUB_HOOK_SECRET
 const port = process.env.GITHUB_HOOK_PORT
+const command = 'sh github/start2.sh'
+const branch = 'refs/heads/master'
+
 console.log("envvvv", process.env, process.argv)
 
 const http = require('http');
 const crypto = require('crypto');
 const exec = require('child_process').exec;
-
-const command = '/usr/bin/nodejs github/start2.sh'
 
 console.log("github webhook start....");
 http.createServer(function (req, res) {
@@ -26,7 +27,7 @@ http.createServer(function (req, res) {
       }
       let bb = JSON.parse(data); // 'Buy the milk'
       console.log("jsonssss", bb);
-      if(bb.ref !== 'refs/heads/master'){
+      if(bb.ref !== branch){
           console.log("github webhook branch not....");
           res.write('github webhook branch not....'+bb.ref);
           res.end();
