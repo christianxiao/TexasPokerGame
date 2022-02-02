@@ -1,6 +1,7 @@
 //const secret = "your_secret_here";
 const secret = process.env.GITHUB_HOOK_SECRET
 const port = process.env.GITHUB_HOOK_PORT
+console.log("envvvv", process.env, process.argv)
 
 const http = require('http');
 const crypto = require('crypto');
