@@ -10,7 +10,7 @@ const exec = require('child_process').exec;
 const command = '/usr/bin/nodejs github/start2.sh'
 
 console.log("github webhook start....");
-http.createServer(function (req, res) {
+http.createServer(async function (req, res) {
 
     const buffers = [];
     console.log("github webhook data....");
