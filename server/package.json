@@ -31,7 +31,7 @@
     "node": ">=10.16.0"
   },
   "scripts": {
-    "start": "npm run build && egg-scripts start --daemon --title=midway-server-node-loan-center --framework=midway --ts",
+    "start": "npm run build && egg-scripts start --daemon --title=midway-server-node-loan-center --ts --framework=midway",
     "stop": "egg-scripts stop --title=midway-server-node-loan-center",
     "start_build": "npm run build && cross-env NODE_ENV=production midway-bin dev",
     "clean": "midway-bin clean",

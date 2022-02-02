@@ -1,0 +1,13 @@
+[Unit]
+Description=Github webhook
+After=network.target
+
+[Service]
+Environment=NODE_PORT=GITHUB_HOOK_PORT
+Type=simple
+User=GITHUB_HOOK_USER
+ExecStart=/usr/bin/nodejs /home/GITHUB_HOOK_USER/GITHUB_HOOK_PROJECT/github/webhook.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

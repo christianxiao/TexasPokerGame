@@ -108,6 +108,21 @@ export default (appInfo: EggAppInfo) => {
     app: true,
     agent: false,
   };
+  if(process.env.MYSQL_USER){
+    config.mysql.client.user = process.env.MYSQL_USER
+  }
+  if(process.env.MYSQL_HOST){
+    config.mysql.client.host = process.env.MYSQL_HOST
+  }
+  if(process.env.MYSQL_PORT){
+    config.mysql.client.port = process.env.MYSQL_PORT
+  }
+  if(process.env.MYSQL_PASSWORD){
+    config.mysql.client.password = process.env.MYSQL_PASSWORD
+  }
+  console.log('argsssss', process.argv)
+  console.log('argsssss22', process.env)
+
 
   return {
     ...bizConfig,

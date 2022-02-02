@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "NODE_ENV=production pm2 start 'npm run build && serve -s dist' --name poker",
+    "stop": "pm2 stop poker",
     "serve": "vue-cli-service serve",
     "dev": "cross-env NODE_ENV=develop vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "served": "npm run build && serve -s dist --port 80"
   },
   "dependencies": {
     "@types/fastclick": "^1.0.29",
@@ -32,7 +35,9 @@
     "@vue/cli-service": "^4.3.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "pm2": "^5.1.2",
     "postcss-px-to-viewport": "^1.1.1",
+    "serve": "^13.0.2",
     "typescript": "~3.8.3",
     "vue-template-compiler": "^2.6.11"
   }
