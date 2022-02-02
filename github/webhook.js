@@ -8,10 +8,11 @@ const exec = require('child_process').exec;
 
 const command = 'sudo /usr/bin/nodejs github/start2.sh'
 
+console.log("github webhook start....");
 http.createServer(function (req, res) {
     req.on('data', function(chunk) {
         let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
-
+        console.log("github webhook....", req);
         if (req.headers['x-hub-signature'] == sig) {
             exec(command);
         }
