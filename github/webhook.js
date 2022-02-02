@@ -20,7 +20,7 @@ http.createServer(function (req, res) {
       let sig = "sha1=" + crypto.createHmac('sha1', secret).update('').digest('hex');
       if (req.headers['x-hub-signature'] != sig) {
           console.log("github webhook sig error....");
-          res.write('github webhook sig error....'+sig);
+          //res.write('github webhook sig error....'+sig);
           res.end();
           return;
       }
@@ -28,15 +28,15 @@ http.createServer(function (req, res) {
       console.log("jsonssss", bb);
       if(bb.ref !== 'refs/heads/master'){
           console.log("github webhook branch not....");
-          res.write('github webhook branch not....'+bb.ref);
+          //res.write('github webhook branch not....'+bb.ref);
           res.end();
           return;
       }
       exec(command);
-      res.write('successsss');
+      //res.write('successsss');
     
       res.end();
     })
   
-    res.end();
+    //res.end();
 }).listen(parseInt(port));
