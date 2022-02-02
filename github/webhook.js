@@ -10,30 +10,33 @@ const exec = require('child_process').exec;
 const command = '/usr/bin/nodejs github/start2.sh'
 
 console.log("github webhook start....");
-http.createServer(async function (req, res) {
-
-    const buffers = [];
-    console.log("github webhook data....");
-    for await (const chunk of req) {
-      buffers.push(chunk);
-    }
-  
-    const data = Buffer.concat(buffers).toString();
-
-    let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
-    if (req.headers['x-hub-signature'] != sig) {
-        console.log("github webhook sig error....");
-        res.end();
-        return;
-    }
-    let bb = JSON.parse(data); // 'Buy the milk'
-    console.log("jsonssss", bb);
-    if(bb.ref !== 'refs/heads/master'){
-        console.log("github webhook branch not....");
-        res.end();
-        return;
-    }
-    exec(command);
+http.createServer(function (req, res) {
+    let data = '';
+    req.on('data', chunk => {
+        console.log("github webhook data....");
+        data += chunk;
+    })
+    req.on('end', () => {
+      let sig = "sha1=" + crypto.createHmac('sha1', secret).update('').digest('hex');
+      if (req.headers['x-hub-signature'] != sig) {
+          console.log("github webhook sig error....");
+          res.write('github webhook sig error....'+sig);
+          res.end();
+          return;
+      }
+      let bb = JSON.parse(data); // 'Buy the milk'
+      console.log("jsonssss", bb);
+      if(bb.ref !== 'refs/heads/master'){
+          console.log("github webhook branch not....");
+          res.write('github webhook branch not....'+bb.ref);
+          res.end();
+          return;
+      }
+      exec(command);
+      res.write('successsss');
+    
+      res.end();
+    })
   
     res.end();
 }).listen(parseInt(port));
