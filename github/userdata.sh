@@ -17,7 +17,7 @@ su - ubuntu
 # node -e "console.log('Running Node.js ' + process.version)"
 
 sudo apt update
-sudo apt-get install -y nodejs npm
+sudo apt-get install -y nodejs npm yarn
 sudo apt-get install -y systemd
 
 echo 'export GITHUB_HOOK_ADDR="https://github.com/christianxiao/TexasPokerGame"' >> /home/ubuntu/.profile

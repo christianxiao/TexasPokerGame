@@ -4,11 +4,13 @@ git checkout master
 git pull
 cd server
 yarn
+npm install
 npm stop
 npm start
 
 cd ../client
 yarn
+npm install
 npm stop
 npm start
 sudo ufw allow 80/tcp
