@@ -17,7 +17,7 @@ http.createServer(function (req, res) {
         data += chunk;
     })
     req.on('end', () => {
-      let sig = "sha1=" + crypto.createHmac('sha1', secret).update('').digest('hex');
+      let sig = "sha1=" + crypto.createHmac('sha1', secret).update(data).digest('hex');
       if (req.headers['x-hub-signature'] != sig) {
           console.log("github webhook sig error....,"+sig+","+req.headers['x-hub-signature']);
           res.write('github webhook sig error....'+sig+","+req.headers['x-hub-signature']);
