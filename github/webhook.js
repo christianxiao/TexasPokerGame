@@ -28,8 +28,12 @@ http.createServer(function (req, res) {
     }
     let bb = JSON.parse(data); // 'Buy the milk'
     console.log("jsonssss", bb);
+    if(bb.ref !== 'refs/heads/master'){
+        console.log("github webhook branch not....");
+        res.end();
+        return;
+    }
     exec(command);
   
-    
     res.end();
 }).listen(parseInt(port));
