@@ -1,4 +1,4 @@
-#USER,PORT,PROJECT
+#USER,PORT,PROJECT; MYSQL_USER,
 sudo cp github/webhook.service /etc/systemd/system/webhook.service
 sudo sed -i "s/_USER_/$GITHUB_HOOK_USER/gi" /etc/systemd/system/webhook.service
 sudo sed -i "s/_PORT_/$GITHUB_HOOK_PORT/gi" /etc/systemd/system/webhook.service

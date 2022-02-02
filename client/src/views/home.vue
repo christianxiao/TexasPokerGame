@@ -56,6 +56,8 @@
                 :curr-game-index="currGameIndex"
                 @getRecord = "getRecord"
                 :command-list="commandList"></gameRecord>
+
+    <span>202202021726</span>
   </div>
 </template>
 
