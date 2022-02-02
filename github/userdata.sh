@@ -20,7 +20,11 @@ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt update
 sudo apt-get install -y nodejs npm
 sudo npm install --global yarn
+# fix port 80 nodejs auth problem
+sudo apt-get install libcap2-bin
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 sudo apt-get install -y systemd
+
 
 echo 'export GITHUB_HOOK_ADDR="https://github.com/christianxiao/TexasPokerGame"' >> /home/ubuntu/.profile
 echo 'export GITHUB_HOOK_PROJECT="TexasPokerGame"' >> /home/ubuntu/.profile
@@ -40,6 +44,7 @@ export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password $MYSQL_PASSWORD'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD'
 sudo apt-get install mysql-server -y # &
+# need to login: mysql -u root -p ; modify password; exit;
 #process_id=$!
 #echo "waiting $(timstamp)" >>  /var/log/script-out 
 #wait $process_id
