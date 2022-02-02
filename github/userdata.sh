@@ -16,6 +16,7 @@ su - ubuntu
 # nvm install node
 # node -e "console.log('Running Node.js ' + process.version)"
 
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt update
 sudo apt-get install -y nodejs npm yarn
 sudo apt-get install -y systemd
