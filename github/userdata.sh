@@ -24,7 +24,7 @@ sudo npm install --global yarn
 sudo apt-get install libcap2-bin
 sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
 sudo apt-get install -y systemd
-
+sudo apt install nginx
 
 echo 'export GITHUB_HOOK_ADDR="https://github.com/christianxiao/TexasPokerGame"' >> /home/ubuntu/.profile
 echo 'export GITHUB_HOOK_PROJECT="TexasPokerGame"' >> /home/ubuntu/.profile
@@ -45,6 +45,10 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password $MYSQL_PASSWORD'
 sudo apt-get install mysql-server -y # &
 # need to login: mysql -u root -p ; modify password; exit;
+# use mysql;
+# FLUSH PRIVILEGES;
+# ALTER USER 'root'@'localhost' IDENTIFIED BY 'My^Pass1';
+# exit
 #process_id=$!
 #echo "waiting $(timstamp)" >>  /var/log/script-out 
 #wait $process_id
