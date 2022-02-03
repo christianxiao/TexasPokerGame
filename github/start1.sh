@@ -11,10 +11,10 @@ sudo systemctl start webhook
 sudo systemctl status webhook
 
 sudo mkdir /lib/systemd/system/nginx.service.d/
-sudo cp github/nginx.conf /lib/systemd/system/nginx.service.d/nginx.service
-sudo sed -i "s/GITHUB_HOOK_USER/$GITHUB_HOOK_USER/gi" /lib/systemd/system/nginx.service.d/nginx.service
-sudo sed -i "s/GITHUB_HOOK_PORT/$GITHUB_HOOK_PORT/gi" /lib/systemd/system/nginx.service.d/nginx.service
-sudo sed -i "s/GITHUB_HOOK_PROJECT/$GITHUB_HOOK_PROJECT/gi" /lib/systemd/system/nginx.service.d/nginx.service
+sudo cp github/nginx-service.conf /lib/systemd/system/nginx.service.d/nginx-service.conf
+sudo sed -i "s/GITHUB_HOOK_USER/$GITHUB_HOOK_USER/gi" /lib/systemd/system/nginx.service.d/nginx-service.conf
+sudo sed -i "s/GITHUB_HOOK_PORT/$GITHUB_HOOK_PORT/gi" /lib/systemd/system/nginx.service.d/nginx-service.conf
+sudo sed -i "s/GITHUB_HOOK_PROJECT/$GITHUB_HOOK_PROJECT/gi" /lib/systemd/system/nginx.service.d/nginx-service.conf
 
 sudo systemctl enable nginx
 sudo systemctl start nginx
