@@ -9,7 +9,7 @@
     "dev": "cross-env NODE_ENV=develop vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "served": "npm run build && ws --port 80 --directory dist --spa index.html --rewrite '/node/(.*) -> http://localhost:7001/node/$1' '/socket.io/(.*) -> ws://localhost:7001/socket.io/$1'"
+    "served": "npm run build"
   },
   "dependencies": {
     "@types/fastclick": "^1.0.29",
