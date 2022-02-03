@@ -8,7 +8,7 @@ console.log("envvvv", process.env, process.argv)
 
 const http = require('http');
 const crypto = require('crypto');
-const exec = require('child_process').exec;
+const exec = require('child_process').execSync;
 
 console.log("github webhook start....");
 http.createServer(function (req, res) {
@@ -33,8 +33,16 @@ http.createServer(function (req, res) {
           res.end();
           return;
       }
-      execSync(command);
-      res.write('successsss');
+      let aa;
+      let er;
+      try {
+        aa = exec(command, {stdio: 'inherit'}).toString();
+      }catch (err){ 
+        console.log("output",err)
+        console.log("sdterr",err.stderr.toString())
+        er = err.stderr.toString()
+      }
+      res.write('successsss, ' + aa + "," + er);
     
       res.end();
     })
