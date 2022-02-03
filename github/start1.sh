@@ -16,6 +16,13 @@ sudo sed -i "s/GITHUB_HOOK_USER/$GITHUB_HOOK_USER/gi" /etc/systemd/system/nginx.
 sudo sed -i "s/GITHUB_HOOK_PORT/$GITHUB_HOOK_PORT/gi" /etc/systemd/system/nginx.service.d/override.conf
 sudo sed -i "s/GITHUB_HOOK_PROJECT/$GITHUB_HOOK_PROJECT/gi" /etc/systemd/system/nginx.service.d/override.conf
 
+mkdir dist
+cp github/nginx.conf dist/nginx.conf
+sudo sed -i "s/GITHUB_HOOK_USER/$GITHUB_HOOK_USER/gi" dist/nginx.conf
+sudo sed -i "s/GITHUB_HOOK_PORT/$GITHUB_HOOK_PORT/gi" dist/nginx.conf
+sudo sed -i "s/GITHUB_HOOK_PROJECT/$GITHUB_HOOK_PROJECT/gi" dist/nginx.conf
+
+
 sudo systemctl enable nginx
 sudo systemctl start nginx
 sudo systemctl status nginx
