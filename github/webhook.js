@@ -33,7 +33,7 @@ http.createServer(function (req, res) {
           res.end();
           return;
       }
-      exec(command);
+      execSync(command);
       res.write('successsss');
     
       res.end();
