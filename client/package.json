@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production pm2 start 'npm run served' --name poker",
-    "stop": "pm2 stop poker",
+    "start": "vue-cli-service build",
+    "stop": "",
     "serve": "vue-cli-service serve",
     "dev": "cross-env NODE_ENV=develop vue-cli-service serve",
     "build": "vue-cli-service build",
