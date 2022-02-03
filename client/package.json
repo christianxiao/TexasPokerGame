@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production pm2 start 'npm run build && serve -s dist -p 80' --name poker",
+    "start": "NODE_ENV=production pm2 start 'npm run served' --name poker",
     "stop": "pm2 stop poker",
     "serve": "vue-cli-service serve",
     "dev": "cross-env NODE_ENV=develop vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "served": "npm run build && serve -s dist -p 80"
+    "served": "npm run build && ws --port 80 --directory dist --spa index.html --rewrite '/node/(.*) -> http://localhost:7001/node/$1' "
   },
   "dependencies": {
     "@types/fastclick": "^1.0.29",
@@ -35,6 +35,7 @@
     "@vue/cli-service": "^4.3.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "local-web-server": "^5.1.1",
     "pm2": "^5.1.2",
     "postcss-px-to-viewport": "^1.1.1",
     "serve": "^13.0.2",
